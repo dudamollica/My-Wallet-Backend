@@ -19,3 +19,14 @@ mongoClient
 server.use(cors());
 server.use(express.json());
 server.listen(5000, () => console.log("Servidor Funfou"));
+
+server.post("/cadastro", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    await db.collection("users").insertOne({ name, email, password });
+    res.sendStatus(201);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
